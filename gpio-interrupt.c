@@ -46,6 +46,9 @@ int main(void) {
 	// Bind to interrupt
 	wiringPiISR(PIN, INT_EDGE_BOTH, &handle);
 
+	// Set pin to output in case it's not
+	pinMode(PIN, OUTPUT);
+
 	// Get initial state of pin
 	state = digitalRead(PIN);
 
