@@ -43,11 +43,11 @@ int main(void) {
 	// Init
 	wiringPiSetup();
 
-	// Bind to interrupt
-	wiringPiISR(PIN, INT_EDGE_BOTH, &handle);
-
 	// Set pin to output in case it's not
 	pinMode(PIN, OUTPUT);
+
+	// Bind to interrupt
+	wiringPiISR(PIN, INT_EDGE_BOTH, &handle);
 
 	// Get initial state of pin
 	state = digitalRead(PIN);
