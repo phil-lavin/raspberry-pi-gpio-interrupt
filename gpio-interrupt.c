@@ -19,21 +19,19 @@ void handle(void) {
 
 	gettimeofday(&now, NULL);
 
-	if (&last_change) {
-		// Time difference in usec
-		diff = (now.tv_sec * 1000000 + now.tv_usec) - (last_change.tv_sec * 1000000 + last_change.tv_usec);
+	// Time difference in usec
+	diff = (now.tv_sec * 1000000 + now.tv_usec) - (last_change.tv_sec * 1000000 + last_change.tv_usec);
 
-		// Filter jitter
-		if (diff > IGNORE_CHANGE_BELOW_USEC) {
-			if (state) {
-				printf("Falling\n");
-			}
-			else {
-				printf("Rising\n");
-			}
-
-			state = !state;
+	// Filter jitter
+	if (diff > IGNORE_CHANGE_BELOW_USEC) {
+		if (state) {
+			printf("Falling\n");
 		}
+		else {
+			printf("Rising\n");
+		}
+
+		state = !state;
 	}
 
 	last_change = now;
@@ -45,6 +43,9 @@ int main(void) {
 
 	// Set pin to output in case it's not
 	pinMode(PIN, OUTPUT);
+
+	// Time now
+	gettimeofday(&last_change, NULL);
 
 	// Bind to interrupt
 	wiringPiISR(PIN, INT_EDGE_BOTH, &handle);
